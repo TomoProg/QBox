@@ -24,8 +24,8 @@ if [ "$RAILS_PRODUCTION_MODE" = '1' ]; then
     fi
     echo '##### assets:precompile end #####'
 
-    /myapp/bin/rails s -d -p 3000 -b '0.0.0.0' -e production
+    /myapp/bin/rails s -p 3000 -b '0.0.0.0' -e production
 else
-    /myapp/bin/rails s -d -p 3000 -b '0.0.0.0'
+    /myapp/bin/rails s -p 3000 -b '0.0.0.0'
 fi
-tail -f /dev/null
+

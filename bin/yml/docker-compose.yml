@@ -51,4 +51,5 @@ services:
       BUNDLE_APP_CONFIG: /myapp/.bundle
       RAILS_PRODUCTION_MODE:
     container_name: "q_box_web"
-    command: /var/scripts/start_webapp.sh
+    command: /var/scripts/entry_point.sh
+
