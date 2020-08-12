@@ -9,6 +9,12 @@ class AnswersController < ApplicationController
     end
   end
 
+  def destroy
+    @answer = Answer.find(params[:id])
+    @answer.destroy
+    redirect_to question_url(@answer.question_id), notice: 'Answer was successfully destroyed.'
+  end
+
   private
   # Only allow a list of trusted parameters through.
   def answer_params
