@@ -15,5 +15,33 @@
   <%= @question.account.username %>
 </p>
 
+<% @question.answers.each do |answer| %>
+  <p>
+    <strong>Answer:</strong>
+    <%= answer.contents %>
+
+    <strong>Contributer:</strong>
+    <%= answer.account.username %>
+
+    <strong>Created At:</strong>
+    <%= answer.created_at %>
+
+    <strong>Updated At:</strong>
+    <%= answer.updated_at %>
+  </p>
+<% end %>
+
+<p>
+  <strong>回答</strong>
+</p>
+<%= render partial: '/shared/error_messages', locals: { model: @answer } %>
+<%= form_with model: @answer, data: {remote: false} do |f| %>
+  <%= f.hidden_field :question_id, value: @question.id %>
+  <%= f.text_area :contents %>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
 <%= link_to 'Edit', edit_question_path(@question) %> |
 <%= link_to 'Back', questions_path %>
