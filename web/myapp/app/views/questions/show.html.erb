@@ -29,7 +29,7 @@
     <strong>Updated At:</strong>
     <%= answer.updated_at %>
 
-    <% if is_mine(answer) %>
+    <% if answer.owner?(current_account.id) %>
       <%= link_to 'Destroy', answer, method: :delete, data: { confirm: 'Are you sure?' } %>
     <% end %>
   </p>
