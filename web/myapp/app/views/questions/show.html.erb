@@ -29,7 +29,9 @@
     <strong>Updated At:</strong>
     <%= answer.updated_at %>
 
-    <%= link_to 'Destroy', answer, method: :delete, data: { confirm: 'Are you sure?' } %>
+    <% if is_mine(answer) %>
+      <%= link_to 'Destroy', answer, method: :delete, data: { confirm: 'Are you sure?' } %>
+    <% end %>
   </p>
 <% end %>
 
