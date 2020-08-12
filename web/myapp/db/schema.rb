@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_11_151814) do
+ActiveRecord::Schema.define(version: 2020_08_11_235151) do
 
   create_table "accounts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -26,6 +26,16 @@ ActiveRecord::Schema.define(version: 2020_08_11_151814) do
     t.index ["username"], name: "index_accounts_on_username", unique: true
   end
 
+  create_table "answers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.bigint "question_id", null: false
+    t.text "contents", null: false
+    t.bigint "account_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["account_id"], name: "index_answers_on_account_id"
+    t.index ["question_id"], name: "index_answers_on_question_id"
+  end
+
   create_table "questions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "title", limit: 80, null: false
     t.text "contents", null: false
@@ -35,5 +45,7 @@ ActiveRecord::Schema.define(version: 2020_08_11_151814) do
     t.index ["account_id"], name: "index_questions_on_account_id"
   end
 
+  add_foreign_key "answers", "accounts"
+  add_foreign_key "answers", "questions"
   add_foreign_key "questions", "accounts"
 end

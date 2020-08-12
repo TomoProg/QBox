@@ -8,6 +8,7 @@ class QuestionsController < ApplicationController
 
   # GET /questions/1
   def show
+    @answer = Answer.new
   end
 
   # GET /questions/new
@@ -46,13 +47,14 @@ class QuestionsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_question
-      @question = Question.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def question_params
-      params.require(:question).permit(:title, :contents).merge(account_id: current_account.id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_question
+    @question = Question.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def question_params
+    params.require(:question).permit(:title, :contents).merge(account_id: current_account.id)
+  end
 end
