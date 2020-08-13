@@ -1,7 +1,6 @@
-class Answer < ApplicationRecord
-  belongs_to :question
+class AnswerReply < ApplicationRecord
+  belongs_to :answer
   belongs_to :account
-  has_many :answer_replies
   include OwnerCheckable
 
   validates :contents, presence: true

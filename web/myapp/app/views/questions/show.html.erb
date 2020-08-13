@@ -33,6 +33,37 @@
       <%= link_to 'Destroy', answer, method: :delete, data: { confirm: 'Are you sure?' } %>
     <% end %>
   </p>
+
+  <% answer.answer_replies.each do |answer_reply| %>
+  <p>
+    <strong>Answer Reply:</strong>
+    <%= answer_reply.contents %>
+
+    <strong>Contributer:</strong>
+    <%= answer_reply.account.username %>
+
+    <strong>Created At:</strong>
+    <%= answer_reply.created_at %>
+
+    <strong>Updated At:</strong>
+    <%= answer_reply.updated_at %>
+
+    <% if answer_reply.owner?(current_account.id) %>
+      <%= link_to 'Destroy', answer_reply, method: :delete, data: { confirm: 'Are you sure?' } %>
+    <% end %>
+  </p>
+  <% end %>
+  <p>
+    <strong>回答返信</strong>
+  </p>
+  <%= render partial: '/shared/error_messages', locals: { model: @answer_reply } %>
+  <%= form_with model: @answer_reply, data: {remote: false} do |f| %>
+    <%= f.hidden_field :answer_id, value: answer.id %>
+    <%= f.text_area :contents %>
+    <div class="actions">
+      <%= f.submit %>
+    </div>
+  <% end %>
 <% end %>
 
 <p>
