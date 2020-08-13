@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_11_235151) do
+ActiveRecord::Schema.define(version: 2020_08_12_084642) do
 
   create_table "accounts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -24,6 +24,16 @@ ActiveRecord::Schema.define(version: 2020_08_11_235151) do
     t.index ["email"], name: "index_accounts_on_email", unique: true
     t.index ["reset_password_token"], name: "index_accounts_on_reset_password_token", unique: true
     t.index ["username"], name: "index_accounts_on_username", unique: true
+  end
+
+  create_table "answer_replies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.bigint "answer_id", null: false
+    t.text "contents", null: false
+    t.bigint "account_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["account_id"], name: "index_answer_replies_on_account_id"
+    t.index ["answer_id"], name: "index_answer_replies_on_answer_id"
   end
 
   create_table "answers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
@@ -45,6 +55,8 @@ ActiveRecord::Schema.define(version: 2020_08_11_235151) do
     t.index ["account_id"], name: "index_questions_on_account_id"
   end
 
+  add_foreign_key "answer_replies", "accounts"
+  add_foreign_key "answer_replies", "answers"
   add_foreign_key "answers", "accounts"
   add_foreign_key "answers", "questions"
   add_foreign_key "questions", "accounts"
