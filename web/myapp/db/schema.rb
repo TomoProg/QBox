@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_12_084642) do
+ActiveRecord::Schema.define(version: 2020_08_13_031706) do
 
   create_table "accounts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -46,6 +46,16 @@ ActiveRecord::Schema.define(version: 2020_08_12_084642) do
     t.index ["question_id"], name: "index_answers_on_question_id"
   end
 
+  create_table "best_answers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.bigint "question_id", null: false
+    t.bigint "answer_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["answer_id"], name: "index_best_answers_on_answer_id"
+    t.index ["question_id"], name: "index_best_answer_question_unique", unique: true
+    t.index ["question_id"], name: "index_best_answers_on_question_id"
+  end
+
   create_table "questions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "title", limit: 80, null: false
     t.text "contents", null: false
@@ -59,5 +69,7 @@ ActiveRecord::Schema.define(version: 2020_08_12_084642) do
   add_foreign_key "answer_replies", "answers"
   add_foreign_key "answers", "accounts"
   add_foreign_key "answers", "questions"
+  add_foreign_key "best_answers", "answers"
+  add_foreign_key "best_answers", "questions"
   add_foreign_key "questions", "accounts"
 end

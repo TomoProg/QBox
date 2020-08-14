@@ -5,5 +5,6 @@ Rails.application.routes.draw do
   devise_for :accounts
   resources :answers, only: [:create, :destroy]
   resources :answer_replies, only: [:create, :destroy]
+  resources :best_answers, only: [:create, :destroy]
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
