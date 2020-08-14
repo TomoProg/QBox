@@ -29,8 +29,28 @@
     <strong>Updated At:</strong>
     <%= answer.updated_at %>
 
+    <%# 回答削除 %>
     <% if answer.owner?(current_account.id) %>
       <%= link_to 'Destroy', answer, method: :delete, data: { confirm: 'Are you sure?' } %>
+    <% end %>
+
+    <%# ベストアンサー %>
+    <% if @question.owner?(current_account.id) %>
+      <%
+        @best_answer ||= BestAnswer.new
+      %>
+      <%= render partial: '/shared/error_messages', locals: { model: @best_answer } %>
+      <% if answer.best_answer.present? %>
+        <%= link_to 'BestDestroy', answer.best_answer, method: :delete, data: { confirm: 'Are you sure?' } %>
+      <% else %>
+        <%= form_with model: @best_answer, data: {remote: false} do |f| %>
+          <%= f.hidden_field :question_id, value: @question.id %>
+          <%= f.hidden_field :answer_id, value: answer.id %>
+          <div class="actions">
+            <%= f.submit %>
+          </div>
+        <% end %>
+      <% end %>
     <% end %>
   </p>
 
@@ -56,6 +76,9 @@
   <p>
     <strong>回答返信</strong>
   </p>
+  <%
+    @answer_reply ||= AnswerReply.new
+  %>
   <%= render partial: '/shared/error_messages', locals: { model: @answer_reply } %>
   <%= form_with model: @answer_reply, data: {remote: false} do |f| %>
     <%= f.hidden_field :answer_id, value: answer.id %>
@@ -69,6 +92,9 @@
 <p>
   <strong>回答</strong>
 </p>
+<%
+  @answer ||= Answer.new
+%>
 <%= render partial: '/shared/error_messages', locals: { model: @answer } %>
 <%= form_with model: @answer, data: {remote: false} do |f| %>
   <%= f.hidden_field :question_id, value: @question.id %>
